@@ -7,21 +7,17 @@ const player = new Player(inframe);
 const onPlay = event =>
   localStorage.setItem('videoplayer-current-time', event.seconds);
 
-const throttled = throttle(onPlay, 60000);
+const throttled = throttle(onPlay, 1000);
+
+player.on('timeupdate', throttled);
 
 player.on('play', () => {
   player.setMuted(true);
 });
 
-player.on('timeupdate', throttled);
-
-player.on('volumechange', event => {
-  localStorage.setItem('currentVolumen', event.volume);
-});
-
 window.addEventListener('DOMContentLoaded', () => {
-  const setTime = localStorage.getItem('videoplayer-current-time');
-  player.setCurrentTime(setTime);
-  const volumeSetting = localStorage.getItem('currentVolumen');
-  player.setVolume(volumeSetting);
+  const currentTimeVideo = localStorage.getItem('videoplayer-current-time');
+  if (currentTimeVideo !== null) {
+    player.setCurrentTime(currentTimeVideo);
+  }
 });

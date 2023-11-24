@@ -20,5 +20,9 @@ const addPictures = galleryItems.map(
 );
 galleryConteiner.insertAdjacentHTML('beforeend', addPictures.join(''));
 
-const gallery = new simpleLightbox('.gallery a', {});
+const gallery = new simpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+});
 gallery.on('show.simplelightbox', function () {});
