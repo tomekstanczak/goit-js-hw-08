@@ -2,25 +2,22 @@ import throttle from 'lodash.throttle';
 
 const emailForm = document.querySelector('[name="email"]');
 const messageForm = document.querySelector('[name="message"]');
+const formInformations = document.querySelector('form');
 const sendForm = document.querySelector('[type="submit"]');
 const storyValue = {};
 
-const emailInput = throttle(event => {
-  event.preventDefault();
-  const emailValue = event.currentTarget.value;
-  storyValue.email = emailValue;
+const inputFill = throttle(event => {
+  if (event.target === emailForm) {
+    const emailValue = event.target.value;
+    storyValue.email = emailValue;
+  } else {
+    const messageValue = event.target.value;
+    storyValue.message = messageValue;
+  }
   storage(storyValue);
 }, 500);
 
-const messageInput = throttle(ev => {
-  ev.preventDefault();
-  const messageValue = ev.currentTarget.value;
-  storyValue.message = messageValue;
-  storage(storyValue);
-}, 500);
-
-emailForm.addEventListener('input', emailInput);
-messageForm.addEventListener('input', messageInput);
+formInformations.addEventListener('input', inputFill);
 
 const storage = function (data) {
   localStorage.setItem('feedback-form-state', JSON.stringify(data));
