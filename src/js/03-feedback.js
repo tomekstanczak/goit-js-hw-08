@@ -6,14 +6,9 @@ const formInformations = document.querySelector('form');
 const sendForm = document.querySelector('[type="submit"]');
 const storyValue = {};
 
-const inputFill = throttle(event => {
-  if (event.target === emailForm) {
-    const emailValue = event.target.value;
-    storyValue.email = emailValue;
-  } else {
-    const messageValue = event.target.value;
-    storyValue.message = messageValue;
-  }
+const inputFill = throttle(() => {
+  storyValue.email = emailForm.value;
+  storyValue.message = messageForm.value;
   storage(storyValue);
 }, 500);
 
